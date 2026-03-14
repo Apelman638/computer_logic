@@ -336,6 +336,7 @@ void control_flow(uint32_t input) {
     cout << "control flow: " << endl;
     set_bitsize::byte i;
     i.byte = input>>OP_SHIFT  & 0xf;
+    cout << i.byte << endl;
     int op = byte_selector(i); // 0b00001 is the flip operation, 0b00000111 is the operation
     cout << "operation: " << op << endl;
     int dest = get_dest(input); //0xff = 0b11111111. is a regular number that gets used like [dest]
@@ -346,8 +347,8 @@ void control_flow(uint32_t input) {
     cout << "value 1: " << num2 << endl; 
 
     switch (op) {
-        case 1<<0: pc = dest; break; //jmp
-        case 1<<1: (num1>0) ? pc = dest-1 : pc = pc; break; //if
+        case 1<<0: pc = dest-1; cout << "jmp to " << dest-1 << endl; break; //jmp
+        case 1<<1: if(num1) {pc = dest-1;} cout << "if " << num1 << endl; break; //if
         //executes something if the value in register is true
         // alu commands can set a register to hold a true (>0) or false (=0) value 
         case 1<<2 : registers[dest] = memory[input>>R1_SHIFT & 0xff]; break; //load
@@ -372,7 +373,7 @@ void control_flow(uint32_t input) {
             MyFile.close();
             break;
         }
-        case 1<<7 : exit(0); break;
+        case 1<<7 : cout << "Program ended" << endl; exit(0); break;
     }
 }
 
@@ -415,14 +416,15 @@ void run_computer() {
     pc = 0;
 
     while(pc < program_len) {
+        cout << "PC: " << pc << "\n" << endl;
         uint32_t instruction = instruct_memory[pc];
-        pc++;              // advance first
         cpu(instruction);  // instruction may modify pc
+        pc++;             
     }
 }
 
 int main() {
     run_computer();
-    cout << registers[0] << endl; // used for debugging and checking register value at the end
+    cout << registers[3] << endl; // used for debugging and checking register value at the end
     return 0;
 }

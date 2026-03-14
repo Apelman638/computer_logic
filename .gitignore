@@ -2,7 +2,7 @@
 archive/
 .venv/
 __pycache__/
-components.dSYM/
+main.dSYM/
 *.sh
 components
 main

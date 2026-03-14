@@ -68,12 +68,18 @@ variables = {}
 no_r2 = ['dinc','inc','set','pass','not','lsh','rsh','if','load','str']
 alu_ops = ["add","sub","or","and","not","xor","pass","set","grt","less","comp","inc","dinc","rsh","lsh"]
 all_ops = ["add","sub","or","and","not","xor","pass","set","grt","less","comp","inc","dinc","rsh","lsh","put","access","varset","clear","clear64","jmp","if","load","str"]
+only_dest = []
 
 #perhaps optimize this and turn it into a function.
 
 for lines in contents:
+    if ('#' in lines):
+        lines = lines.split("#")[0].strip()
+        if not lines:
+            continue
+
     if 'halt' in lines:
-        binary += "00101111000000000000000000000000"
+        binary += "00111111000000000000000000000000\n"
         break
     line = ""
     if 'save' in lines:
@@ -84,12 +90,6 @@ for lines in contents:
         binary += ""
         continue
 
-    if ('#' in lines):
-        lines = lines.split("#")[0].strip()
-        if not lines:
-            continue
-
-    
     if '=' in lines:
         tTokens = lines.strip().split()
         variables[tTokens[0]] = tTokens[2]
@@ -110,7 +110,7 @@ for lines in contents:
     
     cont = False
     # certain ops dont need a value in r2
-    if any(op in lines for op in no_r2):
+    if any(o in lines for o in no_r2):
         r2 = '00000000'
         cont = True
     
