@@ -423,6 +423,6 @@ void run_computer() {
 
 int main() {
     run_computer();
-    cout << registers[0] << endl; //for debugging purposes
+    cout << registers[0] << endl; // used for debugging and checking register value at the end
     return 0;
 }

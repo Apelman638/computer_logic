@@ -1,13 +1,11 @@
-A = 10
-B = 10
+set 0 1
+set 1 1
 
-set 0 0
-set 1 A 
+func fib
+add 0 0 1
+add 1 0 1
+endf fib
 
-func multiply
-add 0 1 0
-endf multiply
-
-rep: B multiply
+rep: 10 fib
 
 save
