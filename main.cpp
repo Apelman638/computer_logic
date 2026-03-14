@@ -328,8 +328,9 @@ void control_flow(uint32_t input) {
     0010 = load, loads memory into a register
     0011 = str, stores register into memory
     0100 = save, saves the entire.bin file 
-    add a command for saving a file
-
+    0101 = print?
+    add command for including other files
+    
     1111 = halt, ends the program
     */
     cout << "control flow: " << endl;
@@ -422,6 +423,6 @@ void run_computer() {
 
 int main() {
     run_computer();
-    cout << registers[1] << endl;
+    cout << registers[0] << endl; //for debugging purposes
     return 0;
 }

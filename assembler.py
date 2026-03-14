@@ -47,6 +47,9 @@ for control flow:
     if = 0001
     load = 0010
     str = 0011
+    save = 0100
+
+add labels
 
 0b 0000 0000 00000000 00000000 00000000
   supop  op    dest      r1       r2

@@ -1,0 +1,10 @@
+.vscode/
+archive/
+.venv/
+__pycache__/
+components.dSYM/
+*.sh
+components
+main
+program
+simulator 
