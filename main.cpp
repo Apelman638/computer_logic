@@ -276,6 +276,9 @@ void word_machine(uint32_t input) {
     operations: 
     put: op 0000
     access: op 0001
+    not implemented: op 0010
+    clear64: op 0011
+    clear: op 0100
 
     */
     cout << "word machine: " << endl;
@@ -328,7 +331,6 @@ void control_flow(uint32_t input) {
     0010 = load, loads memory into a register
     0011 = str, stores register into memory
     0100 = save, saves the entire.bin file 
-    0101 = print?
     add command for including other files
     
     1111 = halt, ends the program
@@ -381,15 +383,7 @@ void cpu(uint32_t input) {
     set_bitsize::byte supOp; 
     supOp.byte = (input>>SUP_SHIFT & 0xF);
     uint32_t in32 = input;
-    // if (input < (1<<32)){ //generates an error
-    //     input &= 0xFFFFFF;
-    //     in32 = input;
-    // } //else 
-    /*
-    if the 1<<1 is true, it should send the next 32 bits into the register processor thingy
-    my goal is to make instructions that can store whole instructions in a register
-    */
-   int r_supOp = byte_selector(supOp);
+    int r_supOp = byte_selector(supOp);
     switch (r_supOp) {
         case 1<<0 : alu(in32); break;
         case 1<<1 : alu2(in32); break;
