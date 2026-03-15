@@ -118,6 +118,9 @@ void save_screen() {
     std::string filename;
     std::cout << "name image: ";
     std::cin >> filename;
+    if(filename == ".cancel") {
+        return;
+    }
     filename += ".txt";
     system("mkdir -p .images");
     std::ofstream Image("./.images/" + filename);
@@ -138,6 +141,9 @@ void open_image() {
     std::string filename;
     std::cout << "image to open: ";
     std::cin >> filename;
+    if(filename == ".cancel") {
+        return;
+    }
     system("mkdir -p .images");
 
     std::ifstream image("./.images/" + filename + ".txt");   
