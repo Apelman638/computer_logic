@@ -1,5 +1,5 @@
 import os
-os.makedirs(".bin", exist_ok=True)
+os.makedirs("bin", exist_ok=True)
 
 """
 i might have to redo this whole thing honestly. i didnt plan ahead at all and did it piece by piece

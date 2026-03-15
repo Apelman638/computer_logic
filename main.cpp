@@ -350,7 +350,7 @@ void control_flow(uint32_t input) {
             cout << "Name file: ";
             cin >> filename;
             system("mkdir -p .bin");
-            filename = "./.bin/" + filename + ".bin";
+            filename = "./bin/" + filename + ".bin";
             cout << "File named: " << filename << endl;
             ofstream MyFile(filename);
             if (MyFile.is_open()) {
@@ -375,14 +375,17 @@ void graphics_control(uint32_t input) {
     0b 0 000 0000 00000000 00000000 00000000
       gc  ?   ?       ?        ?        ?
 
-    up to 5 paramters
     void set_color(int x, int y, Color c);
     Color get_color(int x, int y);
+    void build_screen();
     void draw_rect(int x1, int y1, int x2, int y2, Color c);
-    void render(int x1, int y1, int x2, int y2, Color c);
+    void draw(int x1, int y1, int x2, int y2, Color c);
     void draw_line_horizontal(int x1, int x2, int y, Color c);
     void draw_line_vertical(int y1, int y2, int x, Color c);
     void clear_screen(Color c);
+    void move_obj_x(Object &obj, int dx);
+    void move_obj_y(Object &obj, int dy);
+    void update_screen();
     void print_screen();
     void save_screen();
     void open_image();
@@ -407,7 +410,7 @@ void run_computer() {
     cout << "Run file: "; // chose a .bin file to run
     cin >> file_to_run;
     system("mkdir -p .bin");
-    ifstream input("./.bin/" + file_to_run + ".bin");
+    ifstream input("./bin/" + file_to_run + ".bin");
     if (!input) {
         cout << "Failed to open file" << endl;
         return;

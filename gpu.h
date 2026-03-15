@@ -14,13 +14,29 @@ enum Color{
 
 Color v_memory[WIDTH * HEIGHT];
 
+struct Pixel {
+    int x;
+    int y;
+    Color c;
+};
+
+class Object {
+    public: 
+        std::vector<Pixel> pixels;
+        void add_pixels(int x, int y, Color c);
+};
+
 void set_color(int x, int y, Color c);
 Color get_color(int x, int y);
+void build_screen();
 void draw_rect(int x1, int y1, int x2, int y2, Color c);
 void draw(int x1, int y1, int x2, int y2, Color c);
 void draw_line_horizontal(int x1, int x2, int y, Color c);
 void draw_line_vertical(int y1, int y2, int x, Color c);
 void clear_screen(Color c);
+void move_obj_x(Object &obj, int dx);
+void move_obj_y(Object &obj, int dy);
+void update_screen();
 void print_screen();
 void save_screen();
 void open_image();
