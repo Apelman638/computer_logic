@@ -8,5 +8,3 @@ endf fib
 
 rep: 10 fib
 access32 1
-
-

@@ -48,7 +48,7 @@ int16_t byte_selector(set_bitsize::byte input){ // decoder
     return 1<<input.byte; // if selection is 6, it outputs the 7th bit
 
 }
-//these selectors can be made much more opt/imized apparently
+//these selectors can be made much more optimized apparently
 
 int bit_selector(int16_t selection, int16_t input) {
     return (selection) & (input); // i dont even need to make this
@@ -64,7 +64,6 @@ int switch_2bit(set_bitsize::bit_2 input){
         default: return 0;
     }
 }
-
 
 /*
 create a set of register
@@ -304,7 +303,6 @@ void word_machine(uint32_t input) {
         default:
             cout << "failed" << endl;
             break;
-
     }
 }
 
