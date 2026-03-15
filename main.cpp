@@ -349,6 +349,10 @@ void control_flow(uint32_t input) {
             string filename; 
             cout << "Name file: ";
             cin >> filename;
+            if (filename == ".cancel") {
+                cout << "canceled" << endl;
+                break;
+            }
             system("mkdir -p .bin");
             filename = "./bin/" + filename + ".bin";
             cout << "File named: " << filename << endl;
@@ -409,6 +413,10 @@ void run_computer() {
     string file_to_run;
     cout << "Run file: "; // chose a .bin file to run
     cin >> file_to_run;
+    if (file_to_run == ".cancel") {
+        cout << "canceled" << endl;
+        return;
+    }
     system("mkdir -p .bin");
     ifstream input("./bin/" + file_to_run + ".bin");
     if (!input) {

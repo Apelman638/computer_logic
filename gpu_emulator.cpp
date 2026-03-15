@@ -119,6 +119,7 @@ void save_screen() {
     std::cout << "name image: ";
     std::cin >> filename;
     if(filename == ".cancel") {
+        std::cout << "canceled" << std::endl;
         return;
     }
     filename += ".txt";
@@ -126,7 +127,7 @@ void save_screen() {
     std::ofstream Image("./images/" + filename);
     if (Image.is_open()) {  
         for(int i = 1; i <= WIDTH*HEIGHT; i++) {
-            Image << v_memory[i];
+            Image << v_memory[i-1];
             if(i%64 == 0) {
                 Image << std::endl;
             } // for some reason at the very end a random number is present
@@ -143,6 +144,7 @@ void open_image() {
     std::cout << "image to open: ";
     std::cin >> filename;
     if(filename == ".cancel") {
+        std::cout << "canceled" << std::endl;
         return;
     }
     system("mkdir -p images");
