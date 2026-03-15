@@ -48,7 +48,7 @@ int16_t byte_selector(set_bitsize::byte input){ // decoder
     return 1<<input.byte; // if selection is 6, it outputs the 7th bit
 
 }
-//these selectors can be made much more optimized apparently
+//these selectors can be made much more opt/imized apparently
 
 int bit_selector(int16_t selection, int16_t input) {
     return (selection) & (input); // i dont even need to make this
@@ -137,13 +137,9 @@ void alu(uint32_t input) {
     set_bitsize::byte i;
     i.byte = input>>OP_SHIFT  & 0x7; // operation 
     int op = byte_selector(i); // 0b00001 is the flip operation, 0b00000111 is the operation
-    cout << "operation: " << op << endl;
     int dest = get_dest(input); //0xff = 0b11111111. is a regular number that gets used like [dest]
-    cout << "destination: r" << dest << endl;
     int num1 = registers[(input>>R1_SHIFT & 0xff)]; //takes the number out of the register and the register address ([num])
-    cout << "value in r1: " << num1 << " addr: " << (input>>8 & 0xff) << endl;
     int num2 = registers[(input & 0xff)]; //registers[addr: r2] 
-    cout << "value in r2: " << num2 << " addr: " << (input & 0xff) << endl;
 
     //if the flip bit is on it flips num1 and num2
     int first, sec;
@@ -156,31 +152,31 @@ void alu(uint32_t input) {
 
     switch (op) {
         case 1<<0 :
-            cout << dest << ": " << " add " << num1 << " " << num2 << endl;
+            cout << "into " << dest << " put" << " add " << num1 << " " << num2 << endl;
             registers[dest] = bit_adder(first, sec);//addition;
             break;
         case 1<<1 :
-            cout << dest << " sub " << num1 << " " << num2 << endl;
+            cout << "into " << dest << " put" <<  " sub " << num1 << " " << num2 << endl;
             registers[dest] = bit_adder(first, -sec);//subtraction;
             break;
         case 1<<2 :
-            cout << dest << " or " << num1 << " " << num2 << endl;
+            cout << "into " << dest << " put" << " or " << num1 << " " << num2 << endl;
             registers[dest] = first | sec; //or;
             break;
         case 1<<3 :
-            cout << dest << " and " << num1 << " " << num2 << endl;
+            cout << "into " << dest << " put" <<  " and " << num1 << " " << num2 << endl;
             registers[dest] = first & sec;//and;
             break;
         case 1<<4 :
-            cout << dest << " not " << num1 << " " << num2 << endl;
+            cout << "into " << dest << " put" << " not " << num1 << " " << num2 << endl;
             registers[dest] = ~first; //not;
             break;
         case 1<<5 :
-            cout << dest << " xor " << num1 << " " << num2 << endl;
+            cout << "into " << dest << " put" <<  " xor " << num1 << " " << num2 << endl;
             registers[dest]= first ^ sec; //xor
             break;;
         case 1<<6 :
-            cout << dest << " pass " << num1 << " " << num2 << endl;
+            cout << "into " << dest << " put" << " pass " << num1 << " " << num2 << endl;
             registers[dest] = first; //pass;
             break;
         default:
@@ -209,13 +205,9 @@ void alu2(uint32_t input) {
     set_bitsize::byte i;
     i.byte = input>>OP_SHIFT  & 0x7; // operation 
     int op = byte_selector(i); // 0b00001 is the flip operation, 0b00000111 is the operation
-    cout << "operation: " << op << endl;
     int dest = get_dest(input); //0xff = 0b11111111. is a regular number that gets used like [dest]
-    cout << "destination: r" << dest << endl;
     int num1 = registers[(input>>R1_SHIFT & 0xff)]; //takes the number out of the register and the register address ([num])
-    cout << "value in r1: " << num1 << " addr: " << (input>>8 & 0xff) << endl;
     int num2 = registers[(input & 0xff)]; 
-    cout << "value in r2: " << num2 << " addr: " << (input & 0xff) << endl;
 
     //if the flip bit is on it flips num1 and num2
     int first, sec;
@@ -228,37 +220,37 @@ void alu2(uint32_t input) {
 
     switch (op) {
         case 1<<0: 
-            cout << dest << " set " << (input>>R1_SHIFT & 0xff) << endl;
+            cout << "into " << dest << " put" <<  " set " << (input>>R1_SHIFT & 0xff) << endl;
             registers[dest] = (input>>R1_SHIFT & 0xff);
             break;
         case 1<<1: 
-            cout << dest << " grt " << first << " " << sec << endl;
+            cout << "into " << dest << " put" <<  " grt " << first << " " << sec << endl;
             registers[dest] = (first>sec);
             break;
         case 1<<2: 
-            cout << dest << " less" << first << " " << sec << endl;
+            cout << "into " << dest << " put" << " less" << first << " " << sec << endl;
             registers[dest] = (first<sec);
             break;
         case 1<<3: 
-            cout << dest << " comp" << first << " " << sec << endl;
+            cout << "into " << dest << " put" << " comp" << first << " " << sec << endl;
             registers[dest] = (first==sec);
             break;
         case 1<<4: 
-            cout << dest << " inc " << first << endl;
+            cout << "into " << dest << " put" <<  " inc " << first << endl;
             first++;
             registers[dest] = first;
             break;
         case 1<<5: 
-            cout << dest << " dinc " << first << endl;   
+            cout << "into " << dest << " put" <<  " dinc " << first << endl;   
             first--;
             registers[dest] = first;
             break;
         case 1<<6:
-            cout << dest << " rsh " << first << endl;
+            cout << "into " << dest << " put" << " rsh " << first << endl;
             registers[dest] = first>>1;
             break;
         case 1<<7:
-            cout << dest << " lsh " << first << endl;
+            cout << "into " << dest << " put" << " lsh " << first << endl;
             registers[dest] = first<<1;
             break;
     }
@@ -285,32 +277,28 @@ void word_machine(uint32_t input) {
     set_bitsize::byte i;
     i.byte = input>>OP_SHIFT  & 0xf;
     int op = byte_selector(i); // 0b00001 is the flip operation, 0b00000111 is the operation
-    cout << "operation: " << op << endl;
     int dest = get_dest(input); //0xff = 0b11111111. is a regular number that gets used like [dest]
-    cout << "destination r_64: " << dest << endl;
     int num1 = input>>R1_SHIFT & 0xff; 
-    cout << "value 2: " << num1 << endl;
     int num2 = input & 0xff; 
-    cout << "value 1: " << num2 << endl; 
     
     switch(op) {
         case 1<<0: 
             registers_64[dest] = (registers_64[dest]<<16) | (input & 0xffff);
-            cout << dest << " put " << ((registers_64[dest]<<16) | (input & 0xffff)) << endl;
+            cout << "into " << dest << " put" << ((registers_64[dest]<<16) | (input & 0xffff)) << endl;
             break;
         case 1<<1:
             cout << "\033[31m" << word_accesser(registers_64[dest]) << "\033[0m" << endl;
-            cout << dest << " access " << endl;
+            cout << "into " <<  dest << " access " << endl;
             break;
         case 1<<2:
             cout << "not supported yet" << endl;
             break;
         case 1<<3:
             registers_64[dest] = 0; 
-            cout << "r_64: " << dest << " cleared." << endl;
+            cout << "r_64: " << dest << " has been cleared." << endl;
             break;
         case 1<<4:
-            cout << "r: " << dest << " cleared." << endl;
+            cout <<  "into " << dest << " cleared." << endl;
             registers[dest] = 0;
             break;
         default:
@@ -332,35 +320,32 @@ void control_flow(uint32_t input) {
     0011 = str, stores register into memory
     0100 = save, saves the entire.bin file 
     add command for including other files
+    0101 = access32, prints value in register
     
     1111 = halt, ends the program
     */
     cout << "control flow: " << endl;
     set_bitsize::byte i;
-    i.byte = input>>OP_SHIFT  & 0xf;
-    cout << i.byte << endl;
+    i.byte = input>>OP_SHIFT & 0xf;
     int op = byte_selector(i); // 0b00001 is the flip operation, 0b00000111 is the operation
-    cout << "operation: " << op << endl;
     int dest = get_dest(input); //0xff = 0b11111111. is a regular number that gets used like [dest]
-    cout << "destination memory address: " << dest << endl;
     int num1 = registers[input>>R1_SHIFT & 0xff]; 
-    cout << "value 2: " << num1 << endl;
     int num2 = input & 0xff; 
-    cout << "value 1: " << num2 << endl; 
 
     switch (op) {
-        case 1<<0: pc = dest-1; cout << "jmp to " << dest-1 << endl; break; //jmp
-        case 1<<1: if(num1) {pc = dest-1;} cout << "if " << num1 << endl; break; //if
+        case 1<<0: pc = dest-1; cout << "jmp to " << dest << endl; break; //jmp
+        case 1<<1: if(num1) {pc = dest-1;} cout << "if " << num1 << " is 1, go to line " << dest << endl; break; //if
         //executes something if the value in register is true
         // alu commands can set a register to hold a true (>0) or false (=0) value 
-        case 1<<2 : registers[dest] = memory[input>>R1_SHIFT & 0xff]; break; //load
-        case 1<<3 : memory[dest] = num1; break; //store
+        case 1<<2 : registers[dest] = memory[input>>R1_SHIFT & 0xff]; cout << "memory address " << (input>>R1_SHIFT & 0xff) << " has been loaded into " << dest << endl; break; //load
+        case 1<<3 : memory[dest] = num1; cout << "memory address " << dest << " has been loaded with " << num1 << endl;break; //store
         case 1<<4 : {
             cout << "saving..." << endl;
             string filename; 
             cout << "Name file: ";
             cin >> filename;
             filename += ".bin";
+            cout << "File named: " << filename << endl;
             ofstream MyFile(filename);
             if (MyFile.is_open()) {
                 int i = 0;
@@ -374,6 +359,7 @@ void control_flow(uint32_t input) {
             MyFile.close();
             break;
         }
+        case 1<<5 : cout << "\033[31mvalue is: " << registers[dest] << "\033[0m" << endl; break;
         case 1<<7 : cout << "Program ended" << endl; exit(0); break;
     }
 }
@@ -409,15 +395,15 @@ void run_computer() {
     pc = 0;
 
     while(pc < program_len) {
-        cout << "PC: " << pc << "\n" << endl;
+        cout << "PC: " << pc << endl;
         uint32_t instruction = instruct_memory[pc];
         cpu(instruction);  // instruction may modify pc
         pc++;             
+        cout << endl;
     }
 }
 
 int main() {
     run_computer();
-    cout << registers[3] << endl; // used for debugging and checking register value at the end
     return 0;
 }

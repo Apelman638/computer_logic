@@ -1,7 +1,12 @@
-put 0 34 5
-put 0 12 12
-put 0 15 0
+set 0 1
+set 1 1
 
-access 0
+func fib
+add 0 0 1
+add 1 0 1
+endf fib
 
-save
+rep: 10 fib
+access32 1
+
+

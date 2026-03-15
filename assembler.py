@@ -49,6 +49,7 @@ for control flow:
     load = 0010
     str = 0011
     save = 0100
+    access32 = 0101
 
 add labels
 
@@ -158,7 +159,7 @@ for lines in contents:
     elif tokens[0] in funcs.keys():
         for i in range(repNum): 
             binary+=funcs[tokens[0]]
-    elif tokens[0] == "access" or tokens[0] == "clear" or tokens[0] == "clear64" or tokens[0] == "jmp":
+    elif tokens[0] == "access" or tokens[0] == "clear" or tokens[0] == "clear64" or tokens[0] == "jmp" or tokens[0] == "access32":
         repNum = 1
         flip = '0'
         op = tokens[0]
@@ -224,6 +225,8 @@ for lines in contents:
             line += "00110010"
         case "str":
             line += "00110011"
+        case "access32":
+            line += "00110101"
 
     line += dest + r1 + r2 +  "\n"
     for i in range(repNum): 
