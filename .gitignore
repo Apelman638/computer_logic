@@ -10,3 +10,4 @@ program
 simulator 
 test.asm
 gpu
+.DS_Store
