@@ -105,8 +105,8 @@ void move_obj_y(Object &obj, int dy) {
 }
 
 void print_screen() {
-    for(int i = 0; i < WIDTH*HEIGHT; i++) {
-        std::cout << v_memory[i];
+    for(int i = 1; i <= WIDTH*HEIGHT; i++) {
+        std::cout << v_memory[i-1];
         if(i%64 == 0) {
             std::cout << std::endl;
         }
@@ -170,12 +170,10 @@ void update_screen() { // jesus christ its 1230 am
 int main() {
     draw_rect(5,5,30,30,BLACK);
     print_screen();
-    save_screen();
     move_obj_x(all_objects[0], 1);
     move_obj_y(all_objects[0], 1);
     update_screen();
     print_screen();
-    save_screen();
 
     return 0;
 }
