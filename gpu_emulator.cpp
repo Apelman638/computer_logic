@@ -22,6 +22,8 @@ enum Color{
     BLUE
 };
 
+const Color background_color = WHITE;
+
 void draw(int x1, int y1, int x2, int y2, Color c);
 
 Color v_memory[WIDTH * HEIGHT];
@@ -46,6 +48,14 @@ void set_color(int x, int y, Color c) {
     if(x < 0 || x >= WIDTH) return;
     if(y < 0 || y >= HEIGHT) return;
     v_memory[y*WIDTH + x] = c;
+}
+
+void build_screen() {
+    for(int x = 0; x < WIDTH; x++) {
+        for(int y = 0; y < HEIGHT; y++) {
+            v_memory[y*WIDTH + x] = background_color;
+        }
+    }
 }
 
 Color get_color(int x, int y) {
@@ -82,6 +92,18 @@ void draw(int x1, int y1, int x2, int y2, Color c) {
     all_objects.push_back(obj);
 }
 
+void move_obj_x(Object &obj, int dx) {
+    for(auto &pixel : obj.pixels){
+        pixel.x += dx;
+    }
+}
+
+void move_obj_y(Object &obj, int dy) {
+    for(auto &pixel : obj.pixels){
+        pixel.y += dy;
+    }
+}
+
 void print_screen() {
     for(int i = 0; i < WIDTH*HEIGHT; i++) {
         std::cout << v_memory[i];
@@ -89,6 +111,7 @@ void print_screen() {
             std::cout << std::endl;
         }
     }
+    std::cout << "\n" << std::endl;
 }
 
 void save_screen() {
@@ -133,9 +156,26 @@ void open_image() {
     }
 }
 
+void update_screen() { // jesus christ its 1230 am
+    clear_screen(background_color); // clears background first so it gets overwritten
+    
+    for (auto obj : all_objects) { // updates all objects        
+        for (auto pixel : obj.pixels) {    
+            set_color(pixel.x, pixel.y, pixel.c);
+        }
+    }
+}
+
 // for testing, isnt included in the header file
 int main() {
     draw_rect(5,5,30,30,BLACK);
+    print_screen();
     save_screen();
+    move_obj_x(all_objects[0], 1);
+    move_obj_y(all_objects[0], 1);
+    update_screen();
+    print_screen();
+    save_screen();
+
     return 0;
 }
