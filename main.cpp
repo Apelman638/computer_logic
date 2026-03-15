@@ -376,8 +376,8 @@ void control_flow(uint32_t input) {
 
 void graphics_control(uint32_t input) {
     /*add stuff
-    0b 0 000 0000 00000000 00000000 00000000
-      gc  ?   ?       ?        ?        ?
+    0b 0 0000 000 000000 000000 000000 000000
+      gc  op   c    x1     y1     x2     y2
 
     void set_color(int x, int y, Color c);
     Color get_color(int x, int y);
@@ -393,10 +393,38 @@ void graphics_control(uint32_t input) {
     void print_screen();
     void save_screen();
     void open_image();
+
+    total of 14, some might not need to be added
     */ 
+    set_bitsize::byte i;
+    i.byte = (input>>27 & 0xF);
+    int op = byte_selector(i);
+    int c = (input>>24 & 0x7);
+    Color cc = static_cast<Color>(c);
+    int x1 = (input>>18 & 0x3f);
+    int y1 = (input>>12 & 0x3f);
+    int x2 = (input>>6 & 0x3f);
+    int y2 = (input & 0x3f);
+    switch (op) { //sorting out the functions
+        case 1<<0 : build_screen(); break;
+        case 1<<1 : draw(x1,y1,x2,y2,cc); break;
+        case 1<<2 : draw_rect(x1,x1,x2,y2,cc); break;
+        case 1<<3 : draw_line_horizontal(x1, x2, y1,cc); break;
+        case 1<<4 : draw_line_vertical(y1,y2,x1,cc); break;
+        case 1<<5 : move_obj_x(all_objects[y1], x1); break;
+        case 1<<6 : move_obj_y(all_objects[x1], y1); break;
+        case 1<<7 : update_screen(); break;
+        case 1<<8 : print_screen(); break;
+        case 1<<9 : save_screen(); break;
+        case 1<<10 : open_image(); break;
+    }
 }
 
 void cpu(uint32_t input) {
+    if(input>>31 == 1) {
+        graphics_control(input);
+        return;
+    }
     set_bitsize::byte supOp; 
     supOp.byte = (input>>SUP_SHIFT & 0xF);
     uint32_t in32 = input;

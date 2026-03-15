@@ -5,14 +5,19 @@
 #define HEIGHT 64
 
 enum Color{
-    WHITE,
     BLACK,
     RED,
     GREEN,
-    BLUE
+    YELLOW,
+    BLUE,
+    MAGENTA,
+    CYAN,
+    WHITE
 };
 
 Color v_memory[WIDTH * HEIGHT];
+std::vector<Object> all_objects;
+
 
 struct Pixel {
     int x;

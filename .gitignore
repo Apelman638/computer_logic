@@ -8,7 +8,6 @@ components
 main
 program
 simulator 
-test.asm
 gpu
 .DS_Store
 .gitignore

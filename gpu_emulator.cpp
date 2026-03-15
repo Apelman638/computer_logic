@@ -12,6 +12,8 @@ i need to make it make a screen now,
 implimenting the functions from there into main should be easy
 
 perhaps make a function that changes the color while its drawing
+
+i need to get an actual screen and not terminal
 */
 
 enum Color{
