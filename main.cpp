@@ -3,6 +3,7 @@
 #include <fstream>
 #include <map>
 #include <bitset>
+#include <string>
 #include "gpu.h"
 
 #define SUP_SHIFT 28
@@ -409,17 +410,47 @@ void graphics_control(uint32_t input) {
     int x2 = (input>>6 & 0x3f);
     int y2 = (input & 0x3f);
     switch (op) { //sorting out the functions
-        case 1<<0 : build_screen(); break;
-        case 1<<1 : draw(x1,y1,x2,y2,cc); break;
-        case 1<<2 : draw_rect(x1,x1,x2,y2,cc); break;
-        case 1<<3 : draw_line_horizontal(x1, x2, y1,cc); break;
-        case 1<<4 : draw_line_vertical(y1,y2,x1,cc); break;
-        case 1<<5 : move_obj_x(all_objects[y1], x1); break;
-        case 1<<6 : move_obj_y(all_objects[x1], y1); break;
-        case 1<<7 : update_screen(); break;
-        case 1<<8 : print_screen(); break;
-        case 1<<9 : save_screen(); break;
-        case 1<<10 : open_image(); break;
+        case 1<<0 : 
+            build_screen(); 
+            cout << "creating screen." << endl;
+            break;
+        case 1<<1 : 
+            draw(x1,y1,x2,y2,cc); 
+            cout << "drawing shape " << x2-x1 << " by " << y2-y1 << endl;
+            break;
+        case 1<<2 : 
+            draw_rect(x1,x1,x2,y2,cc);
+            cout << "drawing rect " << x2-x1 << " by " << y2-y1 << endl;
+            break;
+        case 1<<3 : 
+            draw_line_horizontal(x1, x2, y1,cc); 
+            cout << "drawing horizonal line of length " << x2-x1 << " at y " << y1 << " of color #" << cc << endl;
+            break;
+        case 1<<4 : 
+            draw_line_vertical(y1,y2,x1,cc); 
+            cout << "drawing vertical line of length " << y2-y1 << " at y " << x1 << " of color #" << cc << endl;
+            break;
+        case 1<<5 : 
+            move_obj_x(all_objects[y1], x1); 
+            cout << "moving obj " << y1 << " by dx " << x1 << endl;
+            break;
+        case 1<<6 : 
+            move_obj_y(all_objects[x1], y1); 
+            cout << "moving obj " << x1 << " by dy " << y1 << endl;
+            break;
+        case 1<<7 : 
+            update_screen(); 
+            cout << "screen updating" << endl;
+            break;
+        case 1<<8 : 
+            print_screen(); 
+            break;
+        case 1<<9 : 
+            save_screen(); 
+            break;
+        case 1<<10 : 
+            open_image(); 
+            break;
     }
 }
 
@@ -440,7 +471,7 @@ void cpu(uint32_t input) {
     }   
 }
 
-void run_computer() {
+void run_computer(int debug = 0) {
     string file_to_run;
     cout << "Run file: "; // chose a .bin file to run
     cin >> file_to_run;
@@ -466,12 +497,24 @@ void run_computer() {
         cout << "PC: " << pc << endl;
         uint32_t instruction = instruct_memory[pc];
         cpu(instruction);  // instruction may modify pc
-        pc++;             
+        pc++;          
+        if (debug) {
+            string junk;
+            cout << "Enter anything to continue" << endl;
+            cin >> junk;
+            if (junk == ".cancel") {
+                return;
+            }
+        }   
         cout << endl;
     }
 }
 
-int main() {
+int main(int argc, char **argv) {
+    if (string(argv[1]) == "debug") {
+        run_computer(1);
+        return 0;
+    }
     run_computer();
     return 0;
 }
