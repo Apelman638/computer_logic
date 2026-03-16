@@ -147,6 +147,7 @@ def binary(contents):
             continue    
         
         # assembly to gpu, maybe make it its own function
+        # the way i made this is a better model for the whole function
         if any(o in lines for o in gpu_ops):
             line += "1"
             if tokens[0] == "rep:": # this repeats functions, so the function is 3rd after the rep num
