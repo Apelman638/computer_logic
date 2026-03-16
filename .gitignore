@@ -11,3 +11,6 @@ simulator
 gpu
 .DS_Store
 .gitignore
+new_assembler.py
+new.asm
+new_assembler2.py

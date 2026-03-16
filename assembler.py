@@ -2,8 +2,7 @@ import os
 os.makedirs("bin", exist_ok=True)
 
 """
-i might have to redo this whole thing honestly. i didnt plan ahead at all and did it piece by piece
-and i ended up with... this. 
+I am currently remaking this into a more optimized assembler and a more human friendly assembly language.
 """
 
 print("File exists:", os.path.exists("test.asm"))

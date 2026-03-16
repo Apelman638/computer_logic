@@ -85,6 +85,10 @@ void draw_line_horizontal(int x1, int x2, int y, Color c) {
     draw(x1,y,x2,y,c);
 }
 
+void draw_circle(int r, int x, int y, Color c) {
+    // this needs to be made
+}
+
 void draw_line_vertical(int y1, int y2, int x, Color c) {
     draw(x,y1,x,y2,c);
 }
