@@ -449,7 +449,7 @@ void graphics_control(uint32_t input) {
             save_screen(); 
             break;
         case 1<<10 : 
-            open_image(); 
+            open_image(); // image to open is prompted to user
             break;
     }
 }
@@ -511,10 +511,12 @@ void run_computer(int debug = 0) {
 }
 
 int main(int argc, char **argv) {
-    if (string(argv[1]) == "debug") {
-        cout << "DEBUG MODE" << endl;
-        run_computer(1);
-        return 0;
+    if(argc > 1) {
+        if (string(argv[1]) == "debug") {
+            cout << "DEBUG MODE" << endl;
+            run_computer(1);
+            return 0;
+        }
     }
     run_computer();
     return 0;

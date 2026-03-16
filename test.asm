@@ -2,9 +2,15 @@ bldsc
 
 rect 1 20 20 50 50 
 print
-movy 0 5 
+
+A = 5
+func move
+movy 0 1
 upd
 print 
+endf move
+
+rep: A move
 
 savsc
 save
