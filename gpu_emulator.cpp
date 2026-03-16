@@ -14,6 +14,8 @@ implimenting the functions from there into main should be easy
 perhaps make a function that changes the color while its drawing
 
 i need to get an actual screen and not terminal
+
+add drawing circle function
 */
 
 enum Color{
@@ -209,7 +211,6 @@ void update_screen() { // jesus christ its 1230 am
 }
 
 #if 0
-// for testing, isnt included in the header file
 int main() {
     #if 1
     draw_rect(5,5,30,30, BLUE); //whichever object is created first gets is in a lower tier
