@@ -285,7 +285,7 @@ void open_image() {
     }
 }
 
-void update_screen() { // jesus christ its 1230 am
+void update_screen() { 
     clear_screen(background_color); // clears background first so it gets overwritten
     
     for (auto obj : all_objects) { // updates all objects        
