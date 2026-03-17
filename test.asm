@@ -1,15 +1,13 @@
-bldsc
+set 0 1;
+set 1 1;
 
-rect 1 20 20 50 50 
-print
+func fib {
+    add 0 0 1;
+    add 1 0 1;
+};
 
-A = 13
-func move
-movy 0 1
-upd
-print 
-endf move
+rep: 10 fib;
 
-rep: A move
-save
-# appears to not actually move the object for movx, but movy works
+access32 1
+
+save;

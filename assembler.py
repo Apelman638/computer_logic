@@ -5,7 +5,7 @@ os.makedirs("bin", exist_ok=True)
 print("File exists:", os.path.exists("test.asm"))
 
 print("start")
-with open("new.asm", "r") as f:
+with open("test.asm", "r") as f:
     assembly = f.read()
 print("Contents read from file:\n", assembly)
 
@@ -62,6 +62,7 @@ def ready_assembly(line): # this replaces all the variable and function names wi
             rep_num = int(var_list[tokens[1]]) 
         else:
             rep_num = int(tokens[1])
+            print(rep_num)
     for token in tokens:
         token = token.replace(';','')
         if token in var_list: # if the token is a variable
