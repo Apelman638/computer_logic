@@ -37,7 +37,7 @@ struct set_bitsize {
     };
 };
 
-int selector_2bit(set_bitsize::small input) {
+int selector_2bit(set_bitsize::small input) { // unused 
     if ((input.small & (1<<2)) == (1<<2)) {
         return ((1<<1) & input.small);
     }
@@ -57,7 +57,7 @@ int bit_selector(int16_t selection, int16_t input) {
     return (selection) & (input); // i dont even need to make this
 }
 
-int switch_2bit(set_bitsize::bit_2 input){ 
+int switch_2bit(set_bitsize::bit_2 input){ //unused
     //outputs first bit in location given by 2nd bit (either 1st ouput bit or 2nd)
     switch (input.bit_2) {
         case 0b01: return 1;
