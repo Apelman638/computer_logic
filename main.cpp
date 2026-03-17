@@ -431,8 +431,8 @@ void graphics_control(uint32_t input) {
             cout << "drawing vertical line of length " << y2-y1 << " at y " << x1 << " of color #" << cc << endl;
             break;
         case 1<<5 : 
-            move_obj_x(all_objects[y1], x1); 
-            cout << "moving obj " << y1 << " by dx " << x1 << endl;
+            move_obj_x(all_objects[x1], y1); 
+            cout << "moving obj " << x1 << " by dx " << y1 << endl;
             break;
         case 1<<6 : 
             move_obj_y(all_objects[x1], y1); 

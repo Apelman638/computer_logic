@@ -3,8 +3,6 @@ want it to be used by others, but I am proud of what I have done.
 
 run the .py and the .cpp file and input what binary file you want to be used. the assembler assembles to the binary.bin file.
 
-CURRENTLY MOVX IS NOT WORKING
-
 Assembly guide:
 each command must end with ;
 
