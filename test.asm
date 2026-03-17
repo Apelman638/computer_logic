@@ -5,7 +5,13 @@ func moveup {
     upd;
     print;
 };
+func x_move {
+    movx 0 1;
+    upd;
+    print;
+};
 
 rep: 10 moveup;
+rep: 10 x_move;
 
 
