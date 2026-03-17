@@ -30,8 +30,8 @@ struct set_bitsize {
     unsigned int small : 3;
     }; struct large {
     unsigned int large : 20;
-    }; struct byte {
-    unsigned int byte : 4;
+    }; struct halfbyte {
+    unsigned int halfbyte : 4;
     }; struct bit_2 {
     unsigned int bit_2 : 2;
     };
@@ -47,8 +47,8 @@ int selector_2bit(set_bitsize::small input) {
     return 0;
 }
 
-int16_t byte_selector(set_bitsize::byte input){ // decoder
-    return 1<<input.byte; // if selection is 6, it outputs the 7th bit
+int16_t byte_selector(set_bitsize::halfbyte input){ // decoder
+    return 1<<input.halfbyte; // if selection is 6, it outputs the 7th bit
 
 }
 //these selectors can be made much more optimized apparently
@@ -141,8 +141,8 @@ void alu(uint32_t input) {
     pass 111
     */
     cout << "alu1: " << endl;
-    set_bitsize::byte i;
-    i.byte = input>>OP_SHIFT  & 0x7; // operation 
+    set_bitsize::halfbyte i;
+    i.halfbyte = input>>OP_SHIFT  & 0x7; // operation 
     int op = byte_selector(i); // 0b00001 is the flip operation, 0b00000111 is the operation
     int dest = get_dest(input); //0xff = 0b11111111. is a regular number that gets used like [dest]
     int num1 = registers[(input>>R1_SHIFT & 0xff)]; //takes the number out of the register and the register address ([num])
@@ -209,8 +209,8 @@ void alu2(uint32_t input) {
     alu2 n set    d1        5       x
     sets r1 to be 5
     */
-    set_bitsize::byte i;
-    i.byte = input>>OP_SHIFT  & 0x7; // operation 
+    set_bitsize::halfbyte i;
+    i.halfbyte = input>>OP_SHIFT  & 0x7; // operation 
     int op = byte_selector(i); // 0b00001 is the flip operation, 0b00000111 is the operation
     int dest = get_dest(input); //0xff = 0b11111111. is a regular number that gets used like [dest]
     int num1 = registers[(input>>R1_SHIFT & 0xff)]; //takes the number out of the register and the register address ([num])
@@ -281,8 +281,8 @@ void word_machine(uint32_t input) {
 
     */
     cout << "word machine: " << endl;
-    set_bitsize::byte i;
-    i.byte = input>>OP_SHIFT  & 0xf;
+    set_bitsize::halfbyte i;
+    i.halfbyte = input>>OP_SHIFT  & 0xf;
     int op = byte_selector(i); // 0b00001 is the flip operation, 0b00000111 is the operation
     int dest = get_dest(input); //0xff = 0b11111111. is a regular number that gets used like [dest]
     int num1 = input>>R1_SHIFT & 0xff; 
@@ -331,8 +331,8 @@ void control_flow(uint32_t input) {
     1111 = halt, ends the program
     */
     cout << "control flow: " << endl;
-    set_bitsize::byte i;
-    i.byte = input>>OP_SHIFT & 0xf;
+    set_bitsize::halfbyte i;
+    i.halfbyte = input>>OP_SHIFT & 0xf;
     int op = byte_selector(i); // 0b00001 is the flip operation, 0b00000111 is the operation
     int dest = get_dest(input); //0xff = 0b11111111. is a regular number that gets used like [dest]
     int num1 = registers[input>>R1_SHIFT & 0xff]; 
@@ -400,8 +400,8 @@ void graphics_control(uint32_t input) {
     total of 14, some might not need to be added
     */ 
     cout << "graphics_control: " << endl;
-    set_bitsize::byte i;
-    i.byte = (input>>27 & 0xF);
+    set_bitsize::halfbyte i;
+    i.halfbyte = (input>>27 & 0xF);
     int op = byte_selector(i);
     int c = (input>>24 & 0x7);
     Color cc = static_cast<Color>(c);
@@ -462,8 +462,8 @@ void cpu(uint32_t input) {
         graphics_control(input);
         return;
     }
-    set_bitsize::byte supOp; 
-    supOp.byte = (input>>SUP_SHIFT & 0xF);
+    set_bitsize::halfbyte supOp; 
+    supOp.halfbyte = (input>>SUP_SHIFT & 0xF);
     uint32_t in32 = input;
     int r_supOp = byte_selector(supOp);
     switch (r_supOp) {
