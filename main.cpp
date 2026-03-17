@@ -451,6 +451,9 @@ void graphics_control(uint32_t input) {
         case 1<<10 : 
             open_image(); // image to open is prompted to user
             break;
+        case 1<<11 :
+            set_color(x1,y1,cc);
+            cout << "setting: " << x1 << ", " << y1 << " to color #" << cc << endl;
     }
 }
 

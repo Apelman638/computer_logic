@@ -102,14 +102,16 @@ other_ops = {"add":"00000000","sub":"00000001","or":"00000010","and":"00000011",
              "grt":"00010001","less":"00010010","comp":"00010011","put":"00100000"
              }
 only_dest = {
-    "access":"00100001", "clear":"00100100", "clear64":"00100011", "jmp":"00110000", "access32":"00110101","pass":"00000110"}
+    "access":"00100001", "clear":"00100100", "clear64":"00100011", "jmp":"00110000", "access32":"00110101","pass":"00000110"
+    }
 void_ops = {
     "bldsc":f"1{0:031b}", "upd":f"10111{0:027b}", "print":f"11000{0:027b}", "savsc":f"11001{0:027b}", 
     "opnimg":f"11010{0:027b}", "halt":"00111111000000000000000000000000", "save":"00110100000000000000000000000000"
     }
 
 gpu_ops_else = {
-    "draw":"10001", "rect":"10010", "lh":"10011", "lv":"10100", "movx":"10101", "movy":"10110"
+    "draw":"10001", "rect":"10010", "lh":"10011", "lv":"10100", "movx":"10101", "movy":"10110",
+    "setc":"11011",
     # draw has 5 params 3 for c 6 for x1 y1 x2 y2
     # rect has 5 params 3 for c 6 for x1 y1 x2 y2
     # lh has 4 params, 3 for c x1 x2 y
@@ -117,6 +119,7 @@ gpu_ops_else = {
     # movx 2 params, obj dx 6 each
     # movy 2 params, obj dy 6 each 
     # op + c + ...
+    # setc c x1 y1
     }
 
 def to_bin(comm) -> str: # this seems to work 
@@ -151,10 +154,11 @@ def to_bin(comm) -> str: # this seems to work
                 line += gpu_ops_else["lv"] + f"{int(comms[opN+1]):03b}" + f"{int(comms[opN+2]):06b}" + f"{int(comms[opN+3]):06b}" + f"{int(comms[opN+4]):06b}" + f"{0:06b}"
     
             case "movx":
-                line += gpu_ops_else["movx"] + f"{0:03b}" + f"{int(comms[opN+1]):06b}" + f"{int(comms[opN+2]):06b}" + f"{0:06b}" + f"{0:06b}"
-    
+                line += gpu_ops_else["movx"] + f"{0:03b}" + f"{int(comms[opN+1]):06b}" + f"{int(comms[opN+2]):06b}" + f"{0:012b}"
             case "movy":
-                line += gpu_ops_else["movy"] + f"{0:03b}" + f"{int(comms[opN+1]):06b}" + f"{int(comms[opN+2]):06b}" + f"{0:06b}" + f"{0:06b}"
+                line += gpu_ops_else["movy"] + f"{0:03b}" + f"{int(comms[opN+1]):06b}" + f"{int(comms[opN+2]):06b}" + f"{0:012b}"
+            case "setc":
+                line += gpu_ops_else["setc"] + f"{int(comms[opN+1]):03b}" f"{int(comms[opN+2]):06b}" + f"{int(comms[opN+3]):06b}" + f"{0:012b}"
    
     line = (line + "\n")
 
