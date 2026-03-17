@@ -1,13 +1,11 @@
-set 0 1;
-set 1 1;
+rect 1 20 20 50 50;
 
-func fib {
-    add 0 0 1;
-    add 1 0 1;
+func moveup {
+    movy 0 1;
+    upd;
+    print;
 };
 
-rep: 10 fib;
+rep: 10 moveup;
 
-access32 1
 
-save;

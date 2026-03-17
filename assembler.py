@@ -46,7 +46,7 @@ def find_funcs(line):
         adding_func = False 
         rec_name = ""
     elif adding_func:
-        funcs_list[rec_name].append(line.replace(';','')) # isnt working
+        funcs_list[rec_name].append(line.replace(';','')) 
     elif not adding_func:
         pt1.append(line) # removes any lines apart of the function from the code
         # seems to stop after function declaration ends
@@ -121,7 +121,10 @@ gpu_ops_else = {
 
 def to_bin(comm) -> str: # this seems to work 
     line = ''
+    if len(comm) < 1:
+        return ''
     comms = comm.split()
+    print(f"tokens\'{comms}\'")
     op = comms[0]
     opN = 0
     if comms[0] in void_ops:
