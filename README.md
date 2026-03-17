@@ -1,5 +1,4 @@
-This is a project I made to flex my knowledge of computer architecture. It isnt serious in the sense I 
-want it to be used by others, but I am proud of what I have done. 
+This is a project I made to flex my knowledge of computer architecture. It isnt serious in the sense I want it to be used by others, but I am proud of what I have done. 
 
 run the .py and the .cpp file and input what binary file you want to be used. the assembler assembles to the binary.bin file.
 
@@ -7,22 +6,22 @@ WARNING:
 jmp command, if followed by any rep, must be rep_num * num of rep comms + goal line
 
 Assembly guide:
-each command must end with ;
+    each command must end with ;
 
-functions example:
+    functions example:
     func func_name {
         contents;
         contents;
     };
 
-to repeat a command or function do:
+    to repeat a command or function do:
     rep: num command;
 
-to declare a variable:
-     var = num;
-     must be a space on both sides of the =
+    to declare a variable:
+    var = num;
+    must be a space on both sides of the =
 
-basic commands guide:
+    basic commands guide:
     no r2 commands:
     set dest num
     *puts a number into a register
